@@ -29,7 +29,7 @@ func ReadFile(filePath string) string {
 	return string(data)
 }
 
-func openFile(filePath string) *os.File {
+func OpenFile(filePath string) *os.File {
 	file, err := os.Open(filePath)
 	CheckError(err)
 	return file
