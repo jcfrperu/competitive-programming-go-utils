@@ -1,3 +1,3 @@
-module competive_programming_go_utils
+module competive-programming-go-utils
 
 go 1.20
