@@ -14,18 +14,6 @@ import (
 /* ***************   UTILS: print / splits / read input   ************* */
 /* ******************************************************************** */
 
-// how to get input, from a string or default server input
-func GetInput() io.Reader {
-	// from file
-	//return openFile("drawing_book/testcases/001.input")
-
-	// from string
-	//return strings.NewReader("4\n4")
-
-	// from stdin (server config)
-	return os.Stdin
-}
-
 // go specific
 func GetWriter() (*os.File, *bufio.Writer) {
 	outputPath := os.Getenv("OUTPUT_PATH")
@@ -139,8 +127,8 @@ func ParseDouble(s string) float64 {
 }
 
 // read input file as list of strings
-func GetLines() []string {
-	reader := bufio.NewReaderSize(GetInput(), 16*1024*1024)
+func GetLines(input io.Reader) []string {
+	reader := bufio.NewReaderSize(input, 16*1024*1024)
 	var lines = make([]string, 0, 128)
 	scanner := bufio.NewScanner(reader)
 	scanner.Split(bufio.ScanLines)
