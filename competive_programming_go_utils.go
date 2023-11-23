@@ -62,10 +62,16 @@ func GetLines(input io.Reader) []string {
 	return lines
 }
 
+// Print prints a string using a Writer
+func Print(writer *bufio.Writer, data string) {
+	_, err := fmt.Fprintf(writer, data)
+	CheckError(err)
+}
+
+// Out prints a right trimmed string using a writer (specific to competitive programming platforms - avoid extra spaces at the end)
 func Out(writer *bufio.Writer, data string) {
 	trimRight := strings.TrimRight(data, " ")
-	_, err := fmt.Fprintf(writer, trimRight)
-	CheckError(err)
+	Print(writer, trimRight)
 }
 
 func Split(line string, separator string) []string {
@@ -135,6 +141,7 @@ func ParseDouble(s string) float64 {
 /* ********************************************************************* */
 /* *****************   ALGORITHMIC: commons operations   *************** */
 /* ********************************************************************* */
+
 func Frequences(list []int) ([]int, map[int]int) {
 	// creating map of frequencies
 	freqMap := make(map[int]int, len(list))
