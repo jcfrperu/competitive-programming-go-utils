@@ -14,12 +14,10 @@ import (
 /* ***************   UTILS: print / splits / read input   ************* */
 /* ******************************************************************** */
 
-// go specific
-func GetWriter() (*os.File, *bufio.Writer) {
-	outputPath := os.Getenv("OUTPUT_PATH")
+func GetWriter(outputPath string) (*os.File, *bufio.Writer) {
 	if len(outputPath) > 0 {
 		file, err := os.Create(outputPath)
-		checkError(err)
+		CheckError(err)
 		return file, bufio.NewWriterSize(file, 16*1024*1024)
 	}
 	return os.Stdout, bufio.NewWriterSize(os.Stdout, 16*1024*1024)
@@ -27,17 +25,17 @@ func GetWriter() (*os.File, *bufio.Writer) {
 
 func ReadFile(filePath string) string {
 	data, err := os.ReadFile(filePath)
-	checkError(err)
+	CheckError(err)
 	return string(data)
 }
 
 func openFile(filePath string) *os.File {
 	file, err := os.Open(filePath)
-	checkError(err)
+	CheckError(err)
 	return file
 }
 
-func checkError(err error) {
+func CheckError(err error) {
 	if err != nil {
 		panic(err)
 	}
@@ -45,22 +43,31 @@ func checkError(err error) {
 
 func FlushWriter(writer *bufio.Writer) {
 	err := writer.Flush()
-	checkError(err)
+	CheckError(err)
 }
 
 func CloseFile(file *os.File) {
 	err := file.Close()
-	checkError(err)
+	CheckError(err)
 }
 
-// print in output file
+func GetLines(input io.Reader) []string {
+	reader := bufio.NewReaderSize(input, 16*1024*1024)
+	var lines = make([]string, 0, 128)
+	scanner := bufio.NewScanner(reader)
+	scanner.Split(bufio.ScanLines)
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+	return lines
+}
+
 func Out(writer *bufio.Writer, data string) {
 	trimRight := strings.TrimRight(data, " ")
 	_, err := fmt.Fprintf(writer, trimRight)
-	checkError(err)
+	CheckError(err)
 }
 
-// get values from a single line
 func Split(line string, separator string) []string {
 	return strings.Split(line, separator)
 }
@@ -107,38 +114,27 @@ func GetDouble(line string, part int) float64 {
 	return ParseDouble(split[part])
 }
 
-// parsing strings
 func ParseInt(s string) int {
 	value, err := strconv.ParseInt(s, 10, 32)
-	checkError(err)
+	CheckError(err)
 	return int(value)
 }
 
 func ParseLong(s string) int64 {
 	value, err := strconv.ParseInt(s, 10, 64)
-	checkError(err)
+	CheckError(err)
 	return value
 }
 
 func ParseDouble(s string) float64 {
 	value, err := strconv.ParseFloat(s, 64)
-	checkError(err)
+	CheckError(err)
 	return value
 }
 
-// read input file as list of strings
-func GetLines(input io.Reader) []string {
-	reader := bufio.NewReaderSize(input, 16*1024*1024)
-	var lines = make([]string, 0, 128)
-	scanner := bufio.NewScanner(reader)
-	scanner.Split(bufio.ScanLines)
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-	return lines
-}
-
-// algorithm specific
+/* ********************************************************************* */
+/* *****************   ALGORITHMIC: commons operations   *************** */
+/* ********************************************************************* */
 func Frequences(list []int) ([]int, map[int]int) {
 	// creating map of frequencies
 	freqMap := make(map[int]int, len(list))
