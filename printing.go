@@ -6,14 +6,18 @@ import (
 	"strings"
 )
 
-// Print prints a string using a Writer
-func Print(writer *bufio.Writer, data string) {
-	_, err := fmt.Fprintf(writer, data)
-	CheckError(err)
+func Out(writer *bufio.Writer, data string) {
+	PrintOut(writer, data, true, true)
 }
 
-// Out prints a right trimmed string using a writer (specific to competitive programming platforms - avoid extra spaces at the end)
-func Out(writer *bufio.Writer, data string) {
-	trimRight := strings.TrimRight(data, " ")
-	Print(writer, trimRight)
+func PrintOut(writer *bufio.Writer, data string, trimLeft bool, trimRight bool) {
+	dataToPrint := data
+	if trimLeft {
+		dataToPrint = strings.TrimLeft(dataToPrint, " ")
+	}
+	if trimRight {
+		dataToPrint = strings.TrimRight(dataToPrint, " ")
+	}
+	_, err := fmt.Fprintf(writer, dataToPrint)
+	CheckError(err)
 }

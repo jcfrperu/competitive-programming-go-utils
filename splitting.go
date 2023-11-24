@@ -6,7 +6,7 @@ func Split(line string, separator string) []string {
 	return strings.Split(line, separator)
 }
 
-func SplitInt(line string, separator string) []int {
+func SplitInts(line string, separator string) []int {
 	items := Split(line, separator)
 	list := make([]int, 0, len(items))
 	for _, item := range items {
@@ -15,7 +15,7 @@ func SplitInt(line string, separator string) []int {
 	return list
 }
 
-func SplitLong(line string, separator string) []int64 {
+func SplitLongs(line string, separator string) []int64 {
 	items := Split(line, separator)
 	list := make([]int64, 0, len(items))
 	for _, item := range items {
@@ -24,7 +24,7 @@ func SplitLong(line string, separator string) []int64 {
 	return list
 }
 
-func SplitDouble(line string, separator string) []float64 {
+func SplitDoubles(line string, separator string) []float64 {
 	items := Split(line, separator)
 	list := make([]float64, 0, len(items))
 	for _, item := range items {
@@ -33,17 +33,17 @@ func SplitDouble(line string, separator string) []float64 {
 	return list
 }
 
-func GetInt(line string, part int) int {
-	split := Split(line, " ")
+func GetSplitInt(line string, separator string, part int) int {
+	split := Split(line, separator)
 	return ParseInt(split[part])
 }
 
-func GetLong(line string, part int) int64 {
-	split := Split(line, " ")
+func GetSplitLong(line string, separator string, part int) int64 {
+	split := Split(line, separator)
 	return ParseLong(split[part])
 }
 
-func GetDouble(line string, part int) float64 {
-	split := Split(line, " ")
+func GetSplitDouble(line string, separator string, part int) float64 {
+	split := Split(line, separator)
 	return ParseDouble(split[part])
 }

@@ -12,7 +12,7 @@ func FrequenciesInt(list []int) ([]int, map[int]int) {
 	}
 	// sorted list of items without repetition
 	sortedItems := make([]int, 0, len(freqMap))
-	for key, _ := range freqMap {
+	for key := range freqMap {
 		sortedItems = append(sortedItems, key)
 	}
 	sort.Ints(sortedItems)
@@ -27,7 +27,7 @@ func FrequenciesString(list []string) ([]string, map[string]int) {
 	}
 	// sorted list of items without repetition
 	sortedItems := make([]string, 0, len(freqMap))
-	for key, _ := range freqMap {
+	for key := range freqMap {
 		sortedItems = append(sortedItems, key)
 	}
 	sort.Strings(sortedItems)

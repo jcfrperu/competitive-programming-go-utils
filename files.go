@@ -6,20 +6,20 @@ import (
 	"os"
 )
 
-func OpenFile(filePath string) *os.File {
+func openFile(filePath string) *os.File {
 	file, err := os.Open(filePath)
 	CheckError(err)
 	return file
 }
 
-func CloseFile(file *os.File) {
+func closeFile(file *os.File) {
 	err := file.Close()
 	CheckError(err)
 }
 
-func GetLines(input io.Reader) []string {
+func getLines(input io.Reader) []string {
 	reader := bufio.NewReaderSize(input, 16*1024*1024)
-	var lines = make([]string, 0, 128)
+	lines := make([]string, 0, 128)
 	scanner := bufio.NewScanner(reader)
 	scanner.Split(bufio.ScanLines)
 	for scanner.Scan() {
@@ -28,16 +28,16 @@ func GetLines(input io.Reader) []string {
 	return lines
 }
 
-func GetWriter(outputPath string) (*os.File, *bufio.Writer) {
-	if len(outputPath) > 0 {
-		file, err := os.Create(outputPath)
+func getWriter(filePath string) (*os.File, *bufio.Writer) {
+	if len(filePath) > 0 {
+		file, err := os.Create(filePath)
 		CheckError(err)
 		return file, bufio.NewWriterSize(file, 16*1024*1024)
 	}
 	return os.Stdout, bufio.NewWriterSize(os.Stdout, 16*1024*1024)
 }
 
-func FlushWriter(writer *bufio.Writer) {
+func flushWriter(writer *bufio.Writer) {
 	err := writer.Flush()
 	CheckError(err)
 }
