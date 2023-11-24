@@ -1,3 +1,3 @@
-module github.com/jcfrperu/competitive-programming-go-utils
+module github.com/jcfrperu/go-competitive-programming
 
 go 1.20
