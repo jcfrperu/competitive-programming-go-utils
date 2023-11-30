@@ -33,17 +33,17 @@ func SplitDoubles(line string, separator string) []float64 {
 	return list
 }
 
-func GetSplitInt(line string, separator string, part int) int {
+func SplitIntsGetAt(line string, separator string, index int) int {
 	split := Split(line, separator)
-	return ParseInt(split[part])
+	return ParseInt(split[index])
 }
 
-func GetSplitLong(line string, separator string, part int) int64 {
+func SplitLongsGetAt(line string, separator string, index int) int64 {
 	split := Split(line, separator)
-	return ParseLong(split[part])
+	return ParseLong(split[index])
 }
 
-func GetSplitDouble(line string, separator string, part int) float64 {
+func SplitDoublesGetAt(line string, separator string, index int) float64 {
 	split := Split(line, separator)
-	return ParseDouble(split[part])
+	return ParseDouble(split[index])
 }

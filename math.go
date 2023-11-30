@@ -1,68 +1,189 @@
 package cp
 
-func MaxInt(a int, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func MaxLong(a int64, b int64) int64 {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func MaxDouble(a float64, b float64) float64 {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func MaxIntList(list []int) int {
+func ExecInt(operation string, list ...int) int {
+	isMin := operation == "min"
+	isMax := operation == "max"
+	min := list[0]
 	max := list[0]
 	for _, item := range list {
-		if item > max {
-			max = item
+		if isMin {
+			if item < min {
+				min = item
+			}
+		}
+		if isMax {
+			if item > max {
+				max = item
+			}
 		}
 	}
-	return max
+	if isMin {
+		return min
+	}
+	if isMax {
+		return max
+	}
+	panic("operation not supported")
 }
 
-func MaxLongList(list []int64) int64 {
+func ExecLong(operation string, list ...int64) int64 {
+	isMin := operation == "min"
+	isMax := operation == "max"
+	min := list[0]
 	max := list[0]
 	for _, item := range list {
-		if item > max {
-			max = item
+		if isMin {
+			if item < min {
+				min = item
+			}
+		}
+		if isMax {
+			if item > max {
+				max = item
+			}
 		}
 	}
-	return max
+	if isMin {
+		return min
+	}
+	if isMax {
+		return max
+	}
+	panic("operation not supported")
 }
 
-func MaxDoubleList(list []float64) float64 {
+func ExecDouble(operation string, list ...float64) float64 {
+	isMin := operation == "min"
+	isMax := operation == "max"
+	min := list[0]
 	max := list[0]
 	for _, item := range list {
-		if item > max {
-			max = item
+		if isMin {
+			if item < min {
+				min = item
+			}
+		}
+		if isMax {
+			if item > max {
+				max = item
+			}
 		}
 	}
-	return max
+	if isMin {
+		return min
+	}
+	if isMax {
+		return max
+	}
+	panic("operation not supported")
 }
 
-func MinInt(a int, b int) int {
-	if a < b {
-		return a
+func ExecIntList(operation string, list []int) int {
+	isMin := operation == "min"
+	isMax := operation == "max"
+	min := list[0]
+	max := list[0]
+	for _, item := range list {
+		if isMin {
+			if item < min {
+				min = item
+			}
+		}
+		if isMax {
+			if item > max {
+				max = item
+			}
+		}
 	}
-	return b
+	if isMin {
+		return min
+	}
+	if isMax {
+		return max
+	}
+	panic("operation not supported")
 }
 
-func MinLong(a int64, b int64) int64 {
-	if a < b {
-		return a
+func ExecLongList(operation string, list []int64) int64 {
+	isMin := operation == "min"
+	isMax := operation == "max"
+	min := list[0]
+	max := list[0]
+	for _, item := range list {
+		if isMin {
+			if item < min {
+				min = item
+			}
+		}
+		if isMax {
+			if item > max {
+				max = item
+			}
+		}
 	}
-	return b
+	if isMin {
+		return min
+	}
+	if isMax {
+		return max
+	}
+	panic("operation not supported")
+}
+
+func ExecDoubleList(operation string, list []float64) float64 {
+	isMin := operation == "min"
+	isMax := operation == "max"
+	min := list[0]
+	max := list[0]
+	for _, item := range list {
+		if isMin {
+			if item < min {
+				min = item
+			}
+		}
+		if isMax {
+			if item > max {
+				max = item
+			}
+		}
+	}
+	if isMin {
+		return min
+	}
+	if isMax {
+		return max
+	}
+	panic("operation not supported")
+}
+
+func MinInt(list ...int) int {
+	min := list[0]
+	for _, item := range list {
+		if item < min {
+			min = item
+		}
+	}
+	return min
+}
+
+func MinLong(list ...int64) int64 {
+	min := list[0]
+	for _, item := range list {
+		if item < min {
+			min = item
+		}
+	}
+	return min
+}
+
+func MinDouble(list ...float64) float64 {
+	min := list[0]
+	for _, item := range list {
+		if item < min {
+			min = item
+		}
+	}
+	return min
 }
 
 func MinIntList(list []int) int {
@@ -93,4 +214,64 @@ func MinDoubleList(list []float64) float64 {
 		}
 	}
 	return min
+}
+
+func MaxInt(list ...int) int {
+	max := list[0]
+	for _, item := range list {
+		if item > max {
+			max = item
+		}
+	}
+	return max
+}
+
+func MaxLong(list ...int64) int64 {
+	max := list[0]
+	for _, item := range list {
+		if item > max {
+			max = item
+		}
+	}
+	return max
+}
+
+func MaxDouble(list ...float64) float64 {
+	max := list[0]
+	for _, item := range list {
+		if item > max {
+			max = item
+		}
+	}
+	return max
+}
+
+func MaxIntList(list []int) int {
+	max := list[0]
+	for _, item := range list {
+		if item > max {
+			max = item
+		}
+	}
+	return max
+}
+
+func MaxLongList(list []int64) int64 {
+	max := list[0]
+	for _, item := range list {
+		if item > max {
+			max = item
+		}
+	}
+	return max
+}
+
+func MaxDoubleList(list []float64) float64 {
+	max := list[0]
+	for _, item := range list {
+		if item > max {
+			max = item
+		}
+	}
+	return max
 }
