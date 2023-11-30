@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"io"
 	"os"
+	"strings"
 )
 
 func openFile(filePath string) *os.File {
@@ -20,10 +21,11 @@ func closeFile(file *os.File) {
 func getLines(input io.Reader) []string {
 	reader := bufio.NewReaderSize(input, 16*1024*1024)
 	lines := make([]string, 0, 128)
-	scanner := bufio.NewScanner(reader)
-	scanner.Split(bufio.ScanLines)
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
+
+	var str, _, err = reader.ReadLine()
+	for err != io.EOF {
+		lines = append(lines, strings.TrimRight(string(str), "\r\n"))
+		str, _, err = reader.ReadLine()
 	}
 	return lines
 }
