@@ -19,3 +19,15 @@ func ParseDouble(s string) float64 {
 	CheckError(err)
 	return value
 }
+
+func FormatInt(i int) string {
+	return strconv.FormatInt(int64(i), 10)
+}
+
+func FormatLong(i int64) string {
+	return strconv.FormatInt(i, 10)
+}
+
+func FormatDouble(f float64) string {
+	return strconv.FormatFloat(f, 'f', -1, 64)
+}
