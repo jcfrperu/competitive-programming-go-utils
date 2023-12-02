@@ -33,6 +33,11 @@ func SplitDoubles(line string, separator string) []float64 {
 	return list
 }
 
+func SplitStringsGetAt(line string, separator string, index int) string {
+	split := Split(line, separator)
+	return split[index]
+}
+
 func SplitIntsGetAt(line string, separator string, index int) int {
 	split := Split(line, separator)
 	return ParseInt(split[index])
