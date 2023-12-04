@@ -42,7 +42,7 @@ func SplitDoubles(line string, separator string) []float64 {
 	return list
 }
 
-func SplitStringsGetAt(line string, separator string, index int) string {
+func SplitGetAt(line string, separator string, index int) string {
 	split := Split(line, separator)
 	return split[index]
 }
