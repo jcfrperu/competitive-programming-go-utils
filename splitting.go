@@ -10,7 +10,10 @@ func SplitInts(line string, separator string) []int {
 	items := Split(line, separator)
 	list := make([]int, 0, len(items))
 	for _, item := range items {
-		list = append(list, ParseInt(item))
+		item = Trim(item)
+		if item != "" {
+			list = append(list, ParseInt(item))
+		}
 	}
 	return list
 }
@@ -19,7 +22,10 @@ func SplitLongs(line string, separator string) []int64 {
 	items := Split(line, separator)
 	list := make([]int64, 0, len(items))
 	for _, item := range items {
-		list = append(list, ParseLong(item))
+		item = Trim(item)
+		if item != "" {
+			list = append(list, ParseLong(item))
+		}
 	}
 	return list
 }
@@ -28,7 +34,10 @@ func SplitDoubles(line string, separator string) []float64 {
 	items := Split(line, separator)
 	list := make([]float64, 0, len(items))
 	for _, item := range items {
-		list = append(list, ParseDouble(item))
+		item = Trim(item)
+		if item != "" {
+			list = append(list, ParseDouble(item))
+		}
 	}
 	return list
 }
