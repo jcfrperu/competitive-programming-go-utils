@@ -251,3 +251,25 @@ func MaxDoubleList(list []float64) float64 {
 	}
 	return max
 }
+
+func GCDInt(a int, b int) int {
+	for b != 0 {
+		a, b = b, a%b
+	}
+	return a
+}
+
+func LCMInt(a int, b int) int {
+	return a / GCDInt(a, b) * b
+}
+
+func GCDLong(a int64, b int64) int64 {
+	for b != 0 {
+		a, b = b, a%b
+	}
+	return a
+}
+
+func LCMLong(a int64, b int64) int64 {
+	return a / GCDLong(a, b) * b
+}
