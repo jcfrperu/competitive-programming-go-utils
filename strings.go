@@ -371,7 +371,7 @@ func RemoveEnd(str string, remove string) string {
 	return str
 }
 
-// RemoveEndIgnoreCase is the case insensitive removal of a substring if it is at
+// RemoveEndIgnoreCase is the case in sensitive removal of a substring if it is at
 // the end of a source string, otherwise returns the source string.
 func RemoveEndIgnoreCase(str string, remove string) string {
 	if str == "" || remove == "" {
@@ -644,7 +644,17 @@ func PrependIfMissing(str string, prefix string, prefixes ...string) string {
 	return prependIfMissing(str, prefix, false, prefixes...)
 }
 
-// PrependIfMissingIgnoreCase prepends the prefix to the start of the string if the string does not already start, case-insensitive, with any of the prefixes.
+// PrependIfMissingIgnoreCase prepends the prefix to the start of the string if the string does not already start, case-in sensitive, with any of the prefixes.
 func PrependIfMissingIgnoreCase(str string, prefix string, prefixes ...string) string {
 	return prependIfMissing(str, prefix, true, prefixes...)
+}
+
+func AsList(a ...string) []string {
+	list := make([]string, 0, len(a))
+	if len(a) > 0 {
+		for i := range a {
+			list = append(list, a[i])
+		}
+	}
+	return list
 }
