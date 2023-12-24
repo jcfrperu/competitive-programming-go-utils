@@ -9,8 +9,8 @@ func Split(line string, separator string) []string {
 func SplitInts(line string, separator string) []int {
 	items := Split(line, separator)
 	list := make([]int, 0, len(items))
-	for _, item := range items {
-		item = Trim(item)
+	for i := range items {
+		item := Trim(items[i])
 		if item != "" {
 			list = append(list, ParseInt(item))
 		}
@@ -21,8 +21,8 @@ func SplitInts(line string, separator string) []int {
 func SplitLongs(line string, separator string) []int64 {
 	items := Split(line, separator)
 	list := make([]int64, 0, len(items))
-	for _, item := range items {
-		item = Trim(item)
+	for i := range items {
+		item := Trim(items[i])
 		if item != "" {
 			list = append(list, ParseLong(item))
 		}
@@ -33,8 +33,8 @@ func SplitLongs(line string, separator string) []int64 {
 func SplitDoubles(line string, separator string) []float64 {
 	items := Split(line, separator)
 	list := make([]float64, 0, len(items))
-	for _, item := range items {
-		item = Trim(item)
+	for i := range items {
+		item := Trim(items[i])
 		if item != "" {
 			list = append(list, ParseDouble(item))
 		}
@@ -47,17 +47,17 @@ func SplitGetAt(line string, separator string, index int) string {
 	return split[index]
 }
 
-func SplitIntsGetAt(line string, separator string, index int) int {
+func SplitGetIntAt(line string, separator string, index int) int {
 	split := Split(line, separator)
 	return ParseInt(split[index])
 }
 
-func SplitLongsGetAt(line string, separator string, index int) int64 {
+func SplitGetLongAt(line string, separator string, index int) int64 {
 	split := Split(line, separator)
 	return ParseLong(split[index])
 }
 
-func SplitDoublesGetAt(line string, separator string, index int) float64 {
+func SplitGetDoubleAt(line string, separator string, index int) float64 {
 	split := Split(line, separator)
 	return ParseDouble(split[index])
 }
