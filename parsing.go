@@ -23,10 +23,10 @@ func ParseDouble(s string) float64 {
 	return value
 }
 
-func FormatInt[T IntegerNumber](i T) string {
+func FormatInt[T int | int64](i T) string {
 	return strconv.FormatInt(int64(i), 10)
 }
 
-func FormatDouble[T DecimalNumber](f T) string {
+func FormatFloat[T float64](f T) string {
 	return strconv.FormatFloat(float64(f), 'f', -1, 64)
 }

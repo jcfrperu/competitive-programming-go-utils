@@ -648,13 +648,3 @@ func PrependIfMissing(str string, prefix string, prefixes ...string) string {
 func PrependIfMissingIgnoreCase(str string, prefix string, prefixes ...string) string {
 	return prependIfMissing(str, prefix, true, prefixes...)
 }
-
-func AsList(a ...string) []string {
-	list := make([]string, 0, len(a))
-	if len(a) > 0 {
-		for i := range a {
-			list = append(list, a[i])
-		}
-	}
-	return list
-}

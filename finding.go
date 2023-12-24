@@ -1,8 +1,6 @@
 package cp
 
-import "cmp"
-
-func Find[T cmp.Ordered](list []T, value T) int {
+func Find[T int | int64 | float64 | string](list []T, value T) int {
 	for i := range list {
 		if list[i] == value {
 			return i
@@ -11,7 +9,16 @@ func Find[T cmp.Ordered](list []T, value T) int {
 	return -1
 }
 
-func FindAll[T cmp.Ordered](list []T, value T) []int {
+func FindLast[T int | int64 | float64 | string](list []T, value T) int {
+	for i := len(list) - 1; i >= 0; i-- {
+		if list[i] == value {
+			return i
+		}
+	}
+	return -1
+}
+
+func FindAll[T int | int64 | float64 | string](list []T, value T) []int {
 	matches := make([]int, 0)
 	for i := range list {
 		if list[i] == value {
@@ -19,13 +26,4 @@ func FindAll[T cmp.Ordered](list []T, value T) []int {
 		}
 	}
 	return matches
-}
-
-func FindLast[T cmp.Ordered](list []T, value T) int {
-	for i := len(list) - 1; i >= 0; i-- {
-		if list[i] == value {
-			return i
-		}
-	}
-	return -1
 }
