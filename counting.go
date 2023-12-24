@@ -2,7 +2,7 @@ package cp
 
 import "sort"
 
-func Frequencies[T int | int64 | float64 | string](list []T, sortByFreq bool) (map[T]int, []T, int, int) {
+func Freq[T int | int64 | float64 | string](list []T, sortByFreq bool) (map[T]int, []T, int, int) {
 	// creating map of frequencies and find indexes for max and min values
 	minIndex, maxIndex := 0, 0
 	frequencies := make(map[T]int, len(list))
