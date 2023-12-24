@@ -1,10 +1,8 @@
 package cp
 
-import (
-	"sort"
-)
+import "sort"
 
-func Frequencies[T int | int64 | float64 | string](list []T) (map[T]int, []T, int, int) {
+func Frequencies[T int | int64 | float64 | string](list []T, sortByFreq bool) (map[T]int, []T, int, int) {
 	// creating map of frequencies and find indexes for max and min values
 	minIndex, maxIndex := 0, 0
 	frequencies := make(map[T]int, len(list))
@@ -22,9 +20,18 @@ func Frequencies[T int | int64 | float64 | string](list []T) (map[T]int, []T, in
 	for key := range frequencies {
 		items = append(items, key)
 	}
-	// sort list of items by frequency (highest to lowest)
-	sort.Slice(items, func(i, j int) bool {
-		return frequencies[items[i]] > frequencies[items[j]]
-	})
+
+	if sortByFreq {
+		// sort list of items by frequency (highest to lowest)
+		sort.Slice(items, func(i, j int) bool {
+			return frequencies[items[i]] > frequencies[items[j]]
+		})
+	} else {
+		// natural sorting (lowest to highest)
+		sort.Slice(items, func(i, j int) bool {
+			return items[i] < items[j]
+		})
+	}
+
 	return frequencies, items, minIndex, maxIndex
 }
