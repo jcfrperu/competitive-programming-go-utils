@@ -11,44 +11,51 @@ func LCM[T int | int64](a, b T) T {
 	return a / GCD(a, b) * b
 }
 
-func Min[T int | int64 | float64 | string](list []T) (T, int) {
-	index := 0
-	minValue := list[0]
-	for i := range list {
-		if list[i] < minValue {
-			index = i
-			minValue = list[i]
-		}
-	}
-	return minValue, index
+func Min[T int | int64 | float64 | string](list []T) T {
+	return list[MinIndex(list)]
 }
 
-func Max[T int | int64 | float64 | string](list []T) (T, int) {
-	index := 0
-	maxValue := list[0]
+func MinIndex[T int | int64 | float64 | string](list []T) int {
+	minIndex := 0
 	for i := range list {
-		if list[i] > maxValue {
-			index = i
-			maxValue = list[i]
-		}
-	}
-	return maxValue, index
-}
-
-func MinMax[T int | int64 | float64 | string](list []T) (T, int, T, int) {
-	minIndex, minValue := 0, list[0]
-	maxIndex, maxValue := 0, list[0]
-	for i := range list {
-		if list[i] < minValue {
+		if list[i] < list[minIndex] {
 			minIndex = i
-			minValue = list[i]
-		}
-		if list[i] > maxValue {
-			maxIndex = i
-			maxValue = list[i]
 		}
 	}
-	return minValue, minIndex, maxValue, maxIndex
+	return minIndex
+}
+
+func Max[T int | int64 | float64 | string](list []T) T {
+	return list[MaxIndex(list)]
+}
+
+func MaxIndex[T int | int64 | float64 | string](list []T) int {
+	maxIndex := 0
+	for i := range list {
+		if list[i] > list[maxIndex] {
+			maxIndex = i
+		}
+	}
+	return maxIndex
+}
+
+func MinMax[T int | int64 | float64 | string](list []T) (T, T) {
+	minIndex, maxIndex := MinMaxIndex(list)
+	return list[minIndex], list[maxIndex]
+}
+
+func MinMaxIndex[T int | int64 | float64 | string](list []T) (int, int) {
+	minIndex := 0
+	maxIndex := 0
+	for i := range list {
+		if list[i] < list[minIndex] {
+			minIndex = i
+		}
+		if list[i] > list[maxIndex] {
+			maxIndex = i
+		}
+	}
+	return minIndex, maxIndex
 }
 
 func AsList[T int | int64 | float64 | string](a ...T) []T {
