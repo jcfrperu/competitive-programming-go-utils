@@ -108,63 +108,63 @@ func (m Matrix[T]) GetAllNeighbors(rowIndex int, colIndex int) []Node[T] {
 
 func (m Matrix[T]) GetAt(rowIndex int, colIndex int) Node[T] {
 	if !m.IsValid(rowIndex, colIndex) {
-		return Node[T]{Col: -1, Row: -1}
+		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex][colIndex]
 }
 
 func (m Matrix[T]) GetLeft(rowIndex int, colIndex int) Node[T] {
 	if !m.IsValid(rowIndex, colIndex) || !m.IsValid(rowIndex, colIndex-1) {
-		return Node[T]{Col: -1, Row: -1}
+		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex][colIndex-1]
 }
 
 func (m Matrix[T]) GetRight(rowIndex int, colIndex int) Node[T] {
 	if !m.IsValid(rowIndex, colIndex) || !m.IsValid(rowIndex, colIndex+1) {
-		return Node[T]{Col: -1, Row: -1}
+		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex][colIndex+1]
 }
 
 func (m Matrix[T]) GetUp(rowIndex int, colIndex int) Node[T] {
 	if !m.IsValid(rowIndex, colIndex) || !m.IsValid(rowIndex-1, colIndex) {
-		return Node[T]{Col: -1, Row: -1}
+		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex-1][colIndex]
 }
 
 func (m Matrix[T]) GetDown(rowIndex int, colIndex int) Node[T] {
 	if !m.IsValid(rowIndex, colIndex) || !m.IsValid(rowIndex+1, colIndex) {
-		return Node[T]{Col: -1, Row: -1}
+		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex+1][colIndex]
 }
 
 func (m Matrix[T]) GetUpLeft(rowIndex int, colIndex int) Node[T] {
 	if !m.IsValid(rowIndex, colIndex) || !m.IsValid(rowIndex-1, colIndex-1) {
-		return Node[T]{Col: -1, Row: -1}
+		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex-1][colIndex-1]
 }
 
 func (m Matrix[T]) GetUpRight(rowIndex int, colIndex int) Node[T] {
 	if !m.IsValid(rowIndex, colIndex) || !m.IsValid(rowIndex-1, colIndex+1) {
-		return Node[T]{Col: -1, Row: -1}
+		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex-1][colIndex+1]
 }
 
 func (m Matrix[T]) GetDownLeft(rowIndex int, colIndex int) Node[T] {
 	if !m.IsValid(rowIndex, colIndex) || !m.IsValid(rowIndex+1, colIndex-1) {
-		return Node[T]{Col: -1, Row: -1}
+		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex+1][colIndex-1]
 }
 
 func (m Matrix[T]) GetDownRight(rowIndex int, colIndex int) Node[T] {
 	if !m.IsValid(rowIndex, colIndex) || !m.IsValid(rowIndex+1, colIndex+1) {
-		return Node[T]{Col: -1, Row: -1}
+		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex+1][colIndex+1]
 }
