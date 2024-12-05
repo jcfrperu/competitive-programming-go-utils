@@ -1,9 +1,9 @@
 package cp
 
 type MNode[T any] struct {
-	value T
-	row   int
-	col   int
+	Value T
+	Row   int
+	Col   int
 }
 
 type Matrix[T any] [][]MNode[T]
