@@ -12,24 +12,24 @@ func (n Node[T]) IsValid() bool {
 
 type Matrix[T any] [][]Node[T]
 
-func (m Matrix[T]) RowSize() int {
+func (m Matrix[T]) GetRowSize() int {
 	return len(m)
 }
 
-func (m Matrix[T]) ColSize() int {
+func (m Matrix[T]) GetColSize() int {
 	return len(m[0])
 }
 
 func (m Matrix[T]) MatrixSize() (int, int) {
-	return m.RowSize(), m.ColSize()
+	return m.GetRowSize(), m.GetColSize()
 }
 
 func (m Matrix[T]) IsValidRow(rowIndex int) bool {
-	return rowIndex >= 0 && rowIndex < m.RowSize()
+	return rowIndex >= 0 && rowIndex < m.GetRowSize()
 }
 
 func (m Matrix[T]) IsValidCol(colIndex int) bool {
-	return colIndex >= 0 && colIndex < m.ColSize()
+	return colIndex >= 0 && colIndex < m.GetColSize()
 }
 
 func (m Matrix[T]) IsValid(rowIndex int, colIndex int) bool {
@@ -44,12 +44,12 @@ func (m Matrix[T]) IsValidColRange(startColIndex int, endColIndex int) bool {
 	return m.IsValidCol(startColIndex) && m.IsValidCol(endColIndex) && endColIndex >= startColIndex
 }
 
-func (m Matrix[T]) RowAt(rowIndex int) []Node[T] {
+func (m Matrix[T]) GetRowAt(rowIndex int) []Node[T] {
 	return m[rowIndex]
 }
 
-func (m Matrix[T]) ColumnAt(colIndex int) []Node[T] {
-	rowsNumber := m.ColSize()
+func (m Matrix[T]) GetColumnAt(colIndex int) []Node[T] {
+	rowsNumber := m.GetColSize()
 	col := make([]Node[T], rowsNumber)
 	for i := range col {
 		col[i] = m[i][colIndex]
@@ -170,8 +170,8 @@ func (m Matrix[T]) GetDownRight(rowIndex int, colIndex int) Node[T] {
 }
 
 func (m Matrix[T]) Transpose() Matrix[T] {
-	rowSize := m.ColSize()
-	colSize := m.RowSize()
+	rowSize := m.GetColSize()
+	colSize := m.GetRowSize()
 
 	t := make([][]Node[T], rowSize)
 	for i := range t {
