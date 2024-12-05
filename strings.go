@@ -289,6 +289,17 @@ func IsWhitespace(str string) bool {
 	return true
 }
 
+// IndexAt return first match of substr starting from fromIndex
+func IndexAt(s, substr string, fromIndex int) int {
+	if fromIndex >= 0 && fromIndex < len(s) {
+		index := strings.Index(s[fromIndex:], substr)
+		if index >= 0 {
+			return index + fromIndex
+		}
+	}
+	return -1
+}
+
 // Left gets the leftmost len characters of a string.
 func Left(str string, size int) string {
 	if str == "" || size < 0 {

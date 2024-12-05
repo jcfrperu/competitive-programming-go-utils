@@ -22,7 +22,7 @@ func getLines(input io.Reader) []string {
 	reader := bufio.NewReaderSize(input, 16*1024*1024)
 	lines := make([]string, 0, 128)
 
-	var str, _, err = reader.ReadLine()
+	str, _, err := reader.ReadLine()
 	for err != io.EOF {
 		lines = append(lines, strings.TrimRight(string(str), "\r\n"))
 		str, _, err = reader.ReadLine()

@@ -67,3 +67,10 @@ func AsList[T int | int64 | float64 | string](a ...T) []T {
 	}
 	return list
 }
+
+func Abs[T int | int64](a, b T) T {
+	if a > b {
+		return a - b
+	}
+	return b - a
+}

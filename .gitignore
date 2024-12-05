@@ -21,3 +21,4 @@
 go.work
 *.iml
 /.idea/
+.idea/
