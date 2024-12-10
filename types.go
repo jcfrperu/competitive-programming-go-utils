@@ -12,44 +12,40 @@ func (n Node[T]) IsValid() bool {
 
 type Matrix[T any] [][]Node[T]
 
-func (m Matrix[T]) GetRowSize() int {
+func (m Matrix[T]) Rows() int {
 	return len(m)
 }
 
-func (m Matrix[T]) GetColSize() int {
+func (m Matrix[T]) Cols() int {
 	return len(m[0])
 }
 
-func (m Matrix[T]) MatrixSize() (int, int) {
-	return m.GetRowSize(), m.GetColSize()
+func (m Matrix[T]) HasRowAt(rowIndex int) bool {
+	return rowIndex >= 0 && rowIndex < m.Rows()
 }
 
-func (m Matrix[T]) IsValidRow(rowIndex int) bool {
-	return rowIndex >= 0 && rowIndex < m.GetRowSize()
+func (m Matrix[T]) HasColAt(colIndex int) bool {
+	return colIndex >= 0 && colIndex < m.Cols()
 }
 
-func (m Matrix[T]) IsValidCol(colIndex int) bool {
-	return colIndex >= 0 && colIndex < m.GetColSize()
+func (m Matrix[T]) HasNodeAt(rowIndex int, colIndex int) bool {
+	return m.HasRowAt(rowIndex) && m.HasColAt(colIndex)
 }
 
-func (m Matrix[T]) IsValid(rowIndex int, colIndex int) bool {
-	return m.IsValidRow(rowIndex) && m.IsValidCol(colIndex)
+func (m Matrix[T]) HasRowRangeAt(startRowIndex int, endRowIndex int) bool {
+	return m.HasRowAt(startRowIndex) && m.HasRowAt(endRowIndex) && endRowIndex >= startRowIndex
 }
 
-func (m Matrix[T]) IsValidRowRange(startRowIndex int, endRowIndex int) bool {
-	return m.IsValidRow(startRowIndex) && m.IsValidRow(endRowIndex) && endRowIndex >= startRowIndex
-}
-
-func (m Matrix[T]) IsValidColRange(startColIndex int, endColIndex int) bool {
-	return m.IsValidCol(startColIndex) && m.IsValidCol(endColIndex) && endColIndex >= startColIndex
+func (m Matrix[T]) HasColRangeAt(startColIndex int, endColIndex int) bool {
+	return m.HasColAt(startColIndex) && m.HasColAt(endColIndex) && endColIndex >= startColIndex
 }
 
 func (m Matrix[T]) GetRowAt(rowIndex int) []Node[T] {
 	return m[rowIndex]
 }
 
-func (m Matrix[T]) GetColumnAt(colIndex int) []Node[T] {
-	rowsNumber := m.GetColSize()
+func (m Matrix[T]) GetColAt(colIndex int) []Node[T] {
+	rowsNumber := m.Cols()
 	col := make([]Node[T], rowsNumber)
 	for i := range col {
 		col[i] = m[i][colIndex]
@@ -57,121 +53,185 @@ func (m Matrix[T]) GetColumnAt(colIndex int) []Node[T] {
 	return col
 }
 
-func (m Matrix[T]) HasValidNeighbors(rowIndex int, colIndex int) bool {
-	return m.GetUp(rowIndex, colIndex).IsValid() &&
-		m.GetRight(rowIndex, colIndex).IsValid() &&
-		m.GetDown(rowIndex, colIndex).IsValid() &&
-		m.GetLeft(rowIndex, colIndex).IsValid()
-}
-
-func (m Matrix[T]) HasValidCrossNeighbors(rowIndex int, colIndex int) bool {
-	return m.GetUpLeft(rowIndex, colIndex).IsValid() &&
-		m.GetUpRight(rowIndex, colIndex).IsValid() &&
-		m.GetDownRight(rowIndex, colIndex).IsValid() &&
-		m.GetDownLeft(rowIndex, colIndex).IsValid()
-}
-
-func (m Matrix[T]) HasValidAllNeighbors(rowIndex int, colIndex int) bool {
-	return m.HasValidNeighbors(rowIndex, colIndex) && m.HasValidCrossNeighbors(rowIndex, colIndex)
-}
-
-func (m Matrix[T]) GetNeighbors(rowIndex int, colIndex int) []Node[T] {
+func (m Matrix[T]) GetCrossNeighborsAt(rowIndex int, colIndex int) []Node[T] {
 	neighbors := make([]Node[T], 0)
-	neighbors = append(neighbors, m.GetUp(rowIndex, colIndex))
-	neighbors = append(neighbors, m.GetRight(rowIndex, colIndex))
-	neighbors = append(neighbors, m.GetDown(rowIndex, colIndex))
-	neighbors = append(neighbors, m.GetLeft(rowIndex, colIndex))
+	neighbors = append(neighbors, m.GetUpAt(rowIndex, colIndex))
+	neighbors = append(neighbors, m.GetRightAt(rowIndex, colIndex))
+	neighbors = append(neighbors, m.GetDownAt(rowIndex, colIndex))
+	neighbors = append(neighbors, m.GetLeftAt(rowIndex, colIndex))
 	return neighbors
 }
 
-func (m Matrix[T]) GetAllCrossNeighbors(rowIndex int, colIndex int) []Node[T] {
+func (m Matrix[T]) GetDiagonalNeighborsAt(rowIndex int, colIndex int) []Node[T] {
 	neighbors := make([]Node[T], 0)
-	neighbors = append(neighbors, m.GetUpLeft(rowIndex, colIndex))
-	neighbors = append(neighbors, m.GetUpRight(rowIndex, colIndex))
-	neighbors = append(neighbors, m.GetDownRight(rowIndex, colIndex))
-	neighbors = append(neighbors, m.GetDownLeft(rowIndex, colIndex))
+	neighbors = append(neighbors, m.GetUpLeftAt(rowIndex, colIndex))
+	neighbors = append(neighbors, m.GetUpRightAt(rowIndex, colIndex))
+	neighbors = append(neighbors, m.GetDownRightAt(rowIndex, colIndex))
+	neighbors = append(neighbors, m.GetDownLeftAt(rowIndex, colIndex))
 	return neighbors
 }
 
-func (m Matrix[T]) GetAllNeighbors(rowIndex int, colIndex int) []Node[T] {
+func (m Matrix[T]) GetNeighborsAt(rowIndex int, colIndex int) []Node[T] {
 	neighbors := make([]Node[T], 0)
-	neighbors = append(neighbors, m.GetUpLeft(rowIndex, colIndex))
-	neighbors = append(neighbors, m.GetUp(rowIndex, colIndex))
-	neighbors = append(neighbors, m.GetUpRight(rowIndex, colIndex))
-	neighbors = append(neighbors, m.GetRight(rowIndex, colIndex))
-	neighbors = append(neighbors, m.GetDownRight(rowIndex, colIndex))
-	neighbors = append(neighbors, m.GetDown(rowIndex, colIndex))
-	neighbors = append(neighbors, m.GetDownLeft(rowIndex, colIndex))
-	neighbors = append(neighbors, m.GetLeft(rowIndex, colIndex))
+	neighbors = append(neighbors, m.GetUpLeftAt(rowIndex, colIndex))
+	neighbors = append(neighbors, m.GetUpAt(rowIndex, colIndex))
+	neighbors = append(neighbors, m.GetUpRightAt(rowIndex, colIndex))
+	neighbors = append(neighbors, m.GetRightAt(rowIndex, colIndex))
+	neighbors = append(neighbors, m.GetDownRightAt(rowIndex, colIndex))
+	neighbors = append(neighbors, m.GetDownAt(rowIndex, colIndex))
+	neighbors = append(neighbors, m.GetDownLeftAt(rowIndex, colIndex))
+	neighbors = append(neighbors, m.GetLeftAt(rowIndex, colIndex))
 	return neighbors
 }
 
-func (m Matrix[T]) GetAt(rowIndex int, colIndex int) Node[T] {
-	if !m.IsValid(rowIndex, colIndex) {
-		return Node[T]{Row: -1, Col: -1}
+func (m Matrix[T]) GetValidCrossNeighborsAt(rowIndex int, colIndex int) []Node[T] {
+	neighbors := m.GetCrossNeighborsAt(rowIndex, colIndex)
+	validNodes := make([]Node[T], 0)
+	for _, node := range neighbors {
+		if node.IsValid() {
+			validNodes = append(validNodes, node)
+		}
 	}
-	return m[rowIndex][colIndex]
+	return validNodes
 }
 
-func (m Matrix[T]) GetLeft(rowIndex int, colIndex int) Node[T] {
-	if !m.IsValid(rowIndex, colIndex) || !m.IsValid(rowIndex, colIndex-1) {
+func (m Matrix[T]) GetValidDiagonalNeighborsAt(rowIndex int, colIndex int) []Node[T] {
+	neighbors := m.GetDiagonalNeighborsAt(rowIndex, colIndex)
+	validNodes := make([]Node[T], 0)
+	for _, node := range neighbors {
+		if node.IsValid() {
+			validNodes = append(validNodes, node)
+		}
+	}
+	return validNodes
+}
+
+func (m Matrix[T]) GetValidNeighborsAt(rowIndex int, colIndex int) []Node[T] {
+	neighbors := m.GetNeighborsAt(rowIndex, colIndex)
+	validNodes := make([]Node[T], 0)
+	for _, node := range neighbors {
+		if node.IsValid() {
+			validNodes = append(validNodes, node)
+		}
+	}
+	return validNodes
+}
+
+func (m Matrix[T]) GetLeftAt(rowIndex int, colIndex int) Node[T] {
+	if !m.HasNodeAt(rowIndex, colIndex) || !m.HasNodeAt(rowIndex, colIndex-1) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex][colIndex-1]
 }
 
-func (m Matrix[T]) GetRight(rowIndex int, colIndex int) Node[T] {
-	if !m.IsValid(rowIndex, colIndex) || !m.IsValid(rowIndex, colIndex+1) {
+func (m Matrix[T]) GetRightAt(rowIndex int, colIndex int) Node[T] {
+	if !m.HasNodeAt(rowIndex, colIndex) || !m.HasNodeAt(rowIndex, colIndex+1) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex][colIndex+1]
 }
 
-func (m Matrix[T]) GetUp(rowIndex int, colIndex int) Node[T] {
-	if !m.IsValid(rowIndex, colIndex) || !m.IsValid(rowIndex-1, colIndex) {
+func (m Matrix[T]) GetUpAt(rowIndex int, colIndex int) Node[T] {
+	if !m.HasNodeAt(rowIndex, colIndex) || !m.HasNodeAt(rowIndex-1, colIndex) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex-1][colIndex]
 }
 
-func (m Matrix[T]) GetDown(rowIndex int, colIndex int) Node[T] {
-	if !m.IsValid(rowIndex, colIndex) || !m.IsValid(rowIndex+1, colIndex) {
+func (m Matrix[T]) GetDownAt(rowIndex int, colIndex int) Node[T] {
+	if !m.HasNodeAt(rowIndex, colIndex) || !m.HasNodeAt(rowIndex+1, colIndex) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex+1][colIndex]
 }
 
-func (m Matrix[T]) GetUpLeft(rowIndex int, colIndex int) Node[T] {
-	if !m.IsValid(rowIndex, colIndex) || !m.IsValid(rowIndex-1, colIndex-1) {
+func (m Matrix[T]) GetUpLeftAt(rowIndex int, colIndex int) Node[T] {
+	if !m.HasNodeAt(rowIndex, colIndex) || !m.HasNodeAt(rowIndex-1, colIndex-1) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex-1][colIndex-1]
 }
 
-func (m Matrix[T]) GetUpRight(rowIndex int, colIndex int) Node[T] {
-	if !m.IsValid(rowIndex, colIndex) || !m.IsValid(rowIndex-1, colIndex+1) {
+func (m Matrix[T]) GetUpRightAt(rowIndex int, colIndex int) Node[T] {
+	if !m.HasNodeAt(rowIndex, colIndex) || !m.HasNodeAt(rowIndex-1, colIndex+1) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex-1][colIndex+1]
 }
 
-func (m Matrix[T]) GetDownLeft(rowIndex int, colIndex int) Node[T] {
-	if !m.IsValid(rowIndex, colIndex) || !m.IsValid(rowIndex+1, colIndex-1) {
+func (m Matrix[T]) GetDownLeftAt(rowIndex int, colIndex int) Node[T] {
+	if !m.HasNodeAt(rowIndex, colIndex) || !m.HasNodeAt(rowIndex+1, colIndex-1) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex+1][colIndex-1]
 }
 
-func (m Matrix[T]) GetDownRight(rowIndex int, colIndex int) Node[T] {
-	if !m.IsValid(rowIndex, colIndex) || !m.IsValid(rowIndex+1, colIndex+1) {
+func (m Matrix[T]) GetDownRightAt(rowIndex int, colIndex int) Node[T] {
+	if !m.HasNodeAt(rowIndex, colIndex) || !m.HasNodeAt(rowIndex+1, colIndex+1) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex+1][colIndex+1]
 }
 
+func (m Matrix[T]) GetCrossNeighbors(node Node[T]) []Node[T] {
+	return m.GetCrossNeighborsAt(node.Row, node.Col)
+}
+
+func (m Matrix[T]) GetDiagonalNeighbors(node Node[T]) []Node[T] {
+	return m.GetDiagonalNeighborsAt(node.Row, node.Col)
+}
+
+func (m Matrix[T]) GetNeighbors(node Node[T]) []Node[T] {
+	return m.GetNeighborsAt(node.Row, node.Col)
+}
+
+func (m Matrix[T]) GetValidCrossNeighbors(node Node[T]) []Node[T] {
+	return m.GetValidCrossNeighborsAt(node.Row, node.Col)
+}
+
+func (m Matrix[T]) GetValidDiagonalNeighbors(node Node[T]) []Node[T] {
+	return m.GetValidDiagonalNeighborsAt(node.Row, node.Col)
+}
+
+func (m Matrix[T]) GetValidNeighbors(node Node[T]) []Node[T] {
+	return m.GetValidNeighborsAt(node.Row, node.Col)
+}
+
+func (m Matrix[T]) GetLeft(node Node[T]) Node[T] {
+	return m.GetLeftAt(node.Row, node.Col)
+}
+
+func (m Matrix[T]) GetRight(node Node[T]) Node[T] {
+	return m.GetRightAt(node.Row, node.Col)
+}
+
+func (m Matrix[T]) GetUp(node Node[T]) Node[T] {
+	return m.GetUpAt(node.Row, node.Col)
+}
+
+func (m Matrix[T]) GetDown(node Node[T]) Node[T] {
+	return m.GetDownAt(node.Row, node.Col)
+}
+
+func (m Matrix[T]) GetUpLeft(node Node[T]) Node[T] {
+	return m.GetUpLeftAt(node.Row, node.Col)
+}
+
+func (m Matrix[T]) GetUpRight(node Node[T]) Node[T] {
+	return m.GetUpRightAt(node.Row, node.Col)
+}
+
+func (m Matrix[T]) GetDownLeft(node Node[T]) Node[T] {
+	return m.GetDownLeftAt(node.Row, node.Col)
+}
+
+func (m Matrix[T]) GetDownRight(node Node[T]) Node[T] {
+	return m.GetDownRightAt(node.Row, node.Col)
+}
+
 func (m Matrix[T]) Transpose() Matrix[T] {
-	rowSize := m.GetColSize()
-	colSize := m.GetRowSize()
+	rowSize := m.Cols()
+	colSize := m.Rows()
 
 	t := make([][]Node[T], rowSize)
 	for i := range t {

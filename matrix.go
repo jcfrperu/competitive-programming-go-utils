@@ -1,14 +1,15 @@
 package cp
 
-func BuildMatrix[T int | int64 | float64 | string](input [][]T) Matrix[any] {
-	rowSize := len(input)
-	colSize := len(input[0])
+import "fmt"
 
-	matrix := make([][]Node[any], rowSize)
-	for i := 0; i < rowSize; i++ {
-		matrix[i] = make([]Node[any], colSize)
-		for j := 0; j < colSize; j++ {
-			matrix[i][j] = Node[any]{
+func BuildMatrix[T any](input [][]T) Matrix[T] {
+	rows := len(input)
+	cols := len(input[0])
+	matrix := make([][]Node[T], rows)
+	for i := 0; i < rows; i++ {
+		matrix[i] = make([]Node[T], cols)
+		for j := 0; j < cols; j++ {
+			matrix[i][j] = Node[T]{
 				Value: input[i][j],
 				Row:   i,
 				Col:   j,
@@ -18,20 +19,13 @@ func BuildMatrix[T int | int64 | float64 | string](input [][]T) Matrix[any] {
 	return matrix
 }
 
-func BuildStringMatrix(lines []string) Matrix[string] {
-	rowSize := len(lines)
-	colSize := len(lines[0])
-
-	matrix := make([][]Node[string], rowSize)
-	for i := 0; i < rowSize; i++ {
-		matrix[i] = make([]Node[string], colSize)
-		for j := 0; j < colSize; j++ {
-			matrix[i][j] = Node[string]{
-				Value: string(lines[i][j]),
-				Row:   i,
-				Col:   j,
-			}
+func PrintMatrix[T any](m Matrix[T]) {
+	rows := m.Rows()
+	cols := m.Cols()
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
+			fmt.Printf("%v", m[i][j].Value)
 		}
+		fmt.Printf("\n")
 	}
-	return matrix
 }
