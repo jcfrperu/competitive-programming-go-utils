@@ -8,6 +8,11 @@ func (n Node[T]) IsValid() bool {
 	return n.Row >= 0 && n.Col >= 0
 }
 
+func (n Node[T]) Update(value T) Node[T] {
+	n.Value = value
+	return n
+}
+
 // methods for Matrix type
 
 func (m Matrix[T]) Rows() int {
