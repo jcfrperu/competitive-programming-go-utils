@@ -58,10 +58,10 @@ func (m Matrix[T]) GetColAt(colIndex int) []Node[T] {
 
 func (m Matrix[T]) GetCrossNeighborsAt(rowIndex int, colIndex int) []Node[T] {
 	neighbors := make([]Node[T], 0)
+	neighbors = append(neighbors, m.GetLeftAt(rowIndex, colIndex))
 	neighbors = append(neighbors, m.GetUpAt(rowIndex, colIndex))
 	neighbors = append(neighbors, m.GetRightAt(rowIndex, colIndex))
 	neighbors = append(neighbors, m.GetDownAt(rowIndex, colIndex))
-	neighbors = append(neighbors, m.GetLeftAt(rowIndex, colIndex))
 	return neighbors
 }
 
@@ -76,6 +76,7 @@ func (m Matrix[T]) GetDiagonalNeighborsAt(rowIndex int, colIndex int) []Node[T] 
 
 func (m Matrix[T]) GetNeighborsAt(rowIndex int, colIndex int) []Node[T] {
 	neighbors := make([]Node[T], 0)
+	neighbors = append(neighbors, m.GetLeftAt(rowIndex, colIndex))
 	neighbors = append(neighbors, m.GetUpLeftAt(rowIndex, colIndex))
 	neighbors = append(neighbors, m.GetUpAt(rowIndex, colIndex))
 	neighbors = append(neighbors, m.GetUpRightAt(rowIndex, colIndex))
@@ -83,7 +84,6 @@ func (m Matrix[T]) GetNeighborsAt(rowIndex int, colIndex int) []Node[T] {
 	neighbors = append(neighbors, m.GetDownRightAt(rowIndex, colIndex))
 	neighbors = append(neighbors, m.GetDownAt(rowIndex, colIndex))
 	neighbors = append(neighbors, m.GetDownLeftAt(rowIndex, colIndex))
-	neighbors = append(neighbors, m.GetLeftAt(rowIndex, colIndex))
 	return neighbors
 }
 
@@ -188,6 +188,66 @@ func (m Matrix[T]) GetNeighbors(node Node[T]) []Node[T] {
 	return m.GetNeighborsAt(node.Row, node.Col)
 }
 
+func (m Matrix[T]) GetNeighborsWith(pattern string, node Node[T]) []Node[T] {
+	rowIndex := node.Row
+	colIndex := node.Col
+
+	neighbors := make([]Node[T], 0)
+
+	// cross and diagonal
+	if pattern == "+" {
+		neighbors = append(neighbors, m.GetLeftAt(rowIndex, colIndex))
+		neighbors = append(neighbors, m.GetUpAt(rowIndex, colIndex))
+		neighbors = append(neighbors, m.GetRightAt(rowIndex, colIndex))
+		neighbors = append(neighbors, m.GetDownAt(rowIndex, colIndex))
+		return neighbors
+
+	}
+	if pattern == "x" {
+		neighbors = append(neighbors, m.GetUpLeftAt(rowIndex, colIndex))
+		neighbors = append(neighbors, m.GetUpRightAt(rowIndex, colIndex))
+		neighbors = append(neighbors, m.GetDownRightAt(rowIndex, colIndex))
+		neighbors = append(neighbors, m.GetDownLeftAt(rowIndex, colIndex))
+		return neighbors
+	}
+	// lateral al vertical
+	if pattern == "-" {
+		neighbors = append(neighbors, m.GetLeftAt(rowIndex, colIndex))
+		neighbors = append(neighbors, m.GetRightAt(rowIndex, colIndex))
+		return neighbors
+	}
+	if pattern == "|" {
+		neighbors = append(neighbors, m.GetUpAt(rowIndex, colIndex))
+		neighbors = append(neighbors, m.GetDownAt(rowIndex, colIndex))
+		return neighbors
+	}
+	// single diagonals
+	if pattern == "/" {
+		neighbors = append(neighbors, m.GetDownLeftAt(rowIndex, colIndex))
+		neighbors = append(neighbors, m.GetUpRightAt(rowIndex, colIndex))
+		return neighbors
+	}
+	if pattern == "\\" {
+		neighbors = append(neighbors, m.GetUpLeftAt(rowIndex, colIndex))
+		neighbors = append(neighbors, m.GetDownRightAt(rowIndex, colIndex))
+		return neighbors
+	}
+	// others
+	if pattern == "->" {
+		neighbors = append(neighbors, m.GetLeftAt(rowIndex, colIndex))
+		neighbors = append(neighbors, m.GetRightAt(rowIndex, colIndex))
+		return neighbors
+	}
+	if pattern == "<-" {
+		neighbors = append(neighbors, m.GetRightAt(rowIndex, colIndex))
+		neighbors = append(neighbors, m.GetLeftAt(rowIndex, colIndex))
+		return neighbors
+	}
+
+	// by default returns all neighbors
+	return m.GetNeighborsAt(node.Row, node.Col)
+}
+
 func (m Matrix[T]) GetValidCrossNeighbors(node Node[T]) []Node[T] {
 	return m.GetValidCrossNeighborsAt(node.Row, node.Col)
 }
@@ -237,13 +297,12 @@ func (m Matrix[T]) GetDownRight(node Node[T]) Node[T] {
 }
 
 func (m Matrix[T]) Transpose() Matrix[T] {
-	rowSize := m.Cols()
-	colSize := m.Rows()
-
-	t := make([][]Node[T], rowSize)
+	rows := m.Cols()
+	cols := m.Rows()
+	t := make([][]Node[T], rows)
 	for i := range t {
-		t[i] = make([]Node[T], colSize)
-		for j := 0; j < colSize; j++ {
+		t[i] = make([]Node[T], cols)
+		for j := 0; j < cols; j++ {
 			t[i][j] = Node[T]{
 				Value: m[j][i].Value,
 				Row:   i,
@@ -284,10 +343,9 @@ func PrintMatrix[T any](m Matrix[T]) {
 	}
 }
 
-func BuildMatrixString(lines []string) Matrix[string] {
+func BuildStrMatrix(lines []string) Matrix[string] {
 	rows := len(lines)
 	cols := len(lines[0])
-
 	matrix := make([][]Node[string], rows)
 	for i := 0; i < rows; i++ {
 		matrix[i] = make([]Node[string], cols)
@@ -303,7 +361,7 @@ func BuildMatrixString(lines []string) Matrix[string] {
 	return matrix
 }
 
-func PrintMatrixString(m Matrix[string]) {
+func PrintStrMatrix(m Matrix[string]) {
 	rows := m.Rows()
 	cols := m.Cols()
 	for i := 0; i < rows; i++ {
