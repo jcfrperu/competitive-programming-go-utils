@@ -31,7 +31,7 @@ func (m Matrix[T]) HasColAt(colIndex int) bool {
 	return colIndex >= 0 && colIndex < m.Cols()
 }
 
-func (m Matrix[T]) HasNodeAt(rowIndex int, colIndex int) bool {
+func (m Matrix[T]) isValidAt(rowIndex int, colIndex int) bool {
 	return m.HasRowAt(rowIndex) && m.HasColAt(colIndex)
 }
 
@@ -121,56 +121,56 @@ func (m Matrix[T]) GetValidNeighborsAt(rowIndex int, colIndex int) []Node[T] {
 }
 
 func (m Matrix[T]) GetLeftAt(rowIndex int, colIndex int) Node[T] {
-	if !m.HasNodeAt(rowIndex, colIndex) || !m.HasNodeAt(rowIndex, colIndex-1) {
+	if !m.isValidAt(rowIndex, colIndex) || !m.isValidAt(rowIndex, colIndex-1) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex][colIndex-1]
 }
 
 func (m Matrix[T]) GetRightAt(rowIndex int, colIndex int) Node[T] {
-	if !m.HasNodeAt(rowIndex, colIndex) || !m.HasNodeAt(rowIndex, colIndex+1) {
+	if !m.isValidAt(rowIndex, colIndex) || !m.isValidAt(rowIndex, colIndex+1) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex][colIndex+1]
 }
 
 func (m Matrix[T]) GetUpAt(rowIndex int, colIndex int) Node[T] {
-	if !m.HasNodeAt(rowIndex, colIndex) || !m.HasNodeAt(rowIndex-1, colIndex) {
+	if !m.isValidAt(rowIndex, colIndex) || !m.isValidAt(rowIndex-1, colIndex) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex-1][colIndex]
 }
 
 func (m Matrix[T]) GetDownAt(rowIndex int, colIndex int) Node[T] {
-	if !m.HasNodeAt(rowIndex, colIndex) || !m.HasNodeAt(rowIndex+1, colIndex) {
+	if !m.isValidAt(rowIndex, colIndex) || !m.isValidAt(rowIndex+1, colIndex) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex+1][colIndex]
 }
 
 func (m Matrix[T]) GetUpLeftAt(rowIndex int, colIndex int) Node[T] {
-	if !m.HasNodeAt(rowIndex, colIndex) || !m.HasNodeAt(rowIndex-1, colIndex-1) {
+	if !m.isValidAt(rowIndex, colIndex) || !m.isValidAt(rowIndex-1, colIndex-1) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex-1][colIndex-1]
 }
 
 func (m Matrix[T]) GetUpRightAt(rowIndex int, colIndex int) Node[T] {
-	if !m.HasNodeAt(rowIndex, colIndex) || !m.HasNodeAt(rowIndex-1, colIndex+1) {
+	if !m.isValidAt(rowIndex, colIndex) || !m.isValidAt(rowIndex-1, colIndex+1) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex-1][colIndex+1]
 }
 
 func (m Matrix[T]) GetDownLeftAt(rowIndex int, colIndex int) Node[T] {
-	if !m.HasNodeAt(rowIndex, colIndex) || !m.HasNodeAt(rowIndex+1, colIndex-1) {
+	if !m.isValidAt(rowIndex, colIndex) || !m.isValidAt(rowIndex+1, colIndex-1) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex+1][colIndex-1]
 }
 
 func (m Matrix[T]) GetDownRightAt(rowIndex int, colIndex int) Node[T] {
-	if !m.HasNodeAt(rowIndex, colIndex) || !m.HasNodeAt(rowIndex+1, colIndex+1) {
+	if !m.isValidAt(rowIndex, colIndex) || !m.isValidAt(rowIndex+1, colIndex+1) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex+1][colIndex+1]
@@ -198,6 +198,10 @@ func (m Matrix[T]) GetValidDiagonalNeighbors(node Node[T]) []Node[T] {
 
 func (m Matrix[T]) GetValidNeighbors(node Node[T]) []Node[T] {
 	return m.GetValidNeighborsAt(node.Row, node.Col)
+}
+
+func (m Matrix[T]) IsValid(node Node[T]) bool {
+	return m.isValidAt(node.Row, node.Col)
 }
 
 func (m Matrix[T]) GetLeft(node Node[T]) Node[T] {
@@ -269,7 +273,18 @@ func BuildMatrix[T any](input [][]T) Matrix[T] {
 	return matrix
 }
 
-func BuildStringMatrix(lines []string) Matrix[string] {
+func PrintMatrix[T any](m Matrix[T]) {
+	rows := m.Rows()
+	cols := m.Cols()
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
+			fmt.Printf("%v", m[i][j].Value)
+		}
+		fmt.Printf("\n")
+	}
+}
+
+func BuildMatrixString(lines []string) Matrix[string] {
 	rows := len(lines)
 	cols := len(lines[0])
 
@@ -287,18 +302,8 @@ func BuildStringMatrix(lines []string) Matrix[string] {
 	}
 	return matrix
 }
-func PrintMatrix[T any](m Matrix[T]) {
-	rows := m.Rows()
-	cols := m.Cols()
-	for i := 0; i < rows; i++ {
-		for j := 0; j < cols; j++ {
-			fmt.Printf("%v", m[i][j].Value)
-		}
-		fmt.Printf("\n")
-	}
-}
 
-func PrintStringMatrix(m Matrix[string]) {
+func PrintMatrixString(m Matrix[string]) {
 	rows := m.Rows()
 	cols := m.Cols()
 	for i := 0; i < rows; i++ {
