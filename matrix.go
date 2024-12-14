@@ -31,7 +31,7 @@ func (m Matrix[T]) HasColAt(colIndex int) bool {
 	return colIndex >= 0 && colIndex < m.Cols()
 }
 
-func (m Matrix[T]) isValidAt(rowIndex int, colIndex int) bool {
+func (m Matrix[T]) IsValidAt(rowIndex int, colIndex int) bool {
 	return m.HasRowAt(rowIndex) && m.HasColAt(colIndex)
 }
 
@@ -121,56 +121,56 @@ func (m Matrix[T]) GetValidNeighborsAt(rowIndex int, colIndex int) []Node[T] {
 }
 
 func (m Matrix[T]) GetLeftAt(rowIndex int, colIndex int) Node[T] {
-	if !m.isValidAt(rowIndex, colIndex) || !m.isValidAt(rowIndex, colIndex-1) {
+	if !m.IsValidAt(rowIndex, colIndex) || !m.IsValidAt(rowIndex, colIndex-1) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex][colIndex-1]
 }
 
 func (m Matrix[T]) GetRightAt(rowIndex int, colIndex int) Node[T] {
-	if !m.isValidAt(rowIndex, colIndex) || !m.isValidAt(rowIndex, colIndex+1) {
+	if !m.IsValidAt(rowIndex, colIndex) || !m.IsValidAt(rowIndex, colIndex+1) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex][colIndex+1]
 }
 
 func (m Matrix[T]) GetUpAt(rowIndex int, colIndex int) Node[T] {
-	if !m.isValidAt(rowIndex, colIndex) || !m.isValidAt(rowIndex-1, colIndex) {
+	if !m.IsValidAt(rowIndex, colIndex) || !m.IsValidAt(rowIndex-1, colIndex) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex-1][colIndex]
 }
 
 func (m Matrix[T]) GetDownAt(rowIndex int, colIndex int) Node[T] {
-	if !m.isValidAt(rowIndex, colIndex) || !m.isValidAt(rowIndex+1, colIndex) {
+	if !m.IsValidAt(rowIndex, colIndex) || !m.IsValidAt(rowIndex+1, colIndex) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex+1][colIndex]
 }
 
 func (m Matrix[T]) GetUpLeftAt(rowIndex int, colIndex int) Node[T] {
-	if !m.isValidAt(rowIndex, colIndex) || !m.isValidAt(rowIndex-1, colIndex-1) {
+	if !m.IsValidAt(rowIndex, colIndex) || !m.IsValidAt(rowIndex-1, colIndex-1) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex-1][colIndex-1]
 }
 
 func (m Matrix[T]) GetUpRightAt(rowIndex int, colIndex int) Node[T] {
-	if !m.isValidAt(rowIndex, colIndex) || !m.isValidAt(rowIndex-1, colIndex+1) {
+	if !m.IsValidAt(rowIndex, colIndex) || !m.IsValidAt(rowIndex-1, colIndex+1) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex-1][colIndex+1]
 }
 
 func (m Matrix[T]) GetDownLeftAt(rowIndex int, colIndex int) Node[T] {
-	if !m.isValidAt(rowIndex, colIndex) || !m.isValidAt(rowIndex+1, colIndex-1) {
+	if !m.IsValidAt(rowIndex, colIndex) || !m.IsValidAt(rowIndex+1, colIndex-1) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex+1][colIndex-1]
 }
 
 func (m Matrix[T]) GetDownRightAt(rowIndex int, colIndex int) Node[T] {
-	if !m.isValidAt(rowIndex, colIndex) || !m.isValidAt(rowIndex+1, colIndex+1) {
+	if !m.IsValidAt(rowIndex, colIndex) || !m.IsValidAt(rowIndex+1, colIndex+1) {
 		return Node[T]{Row: -1, Col: -1}
 	}
 	return m[rowIndex+1][colIndex+1]
@@ -261,7 +261,7 @@ func (m Matrix[T]) GetValidNeighbors(node Node[T]) []Node[T] {
 }
 
 func (m Matrix[T]) IsValid(node Node[T]) bool {
-	return m.isValidAt(node.Row, node.Col)
+	return m.IsValidAt(node.Row, node.Col)
 }
 
 func (m Matrix[T]) GetLeft(node Node[T]) Node[T] {
