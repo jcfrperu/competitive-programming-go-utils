@@ -13,6 +13,36 @@ func (n Node[T]) Update(value T) Node[T] {
 	return n
 }
 
+// methods for Matrix range
+
+func (r MatrixRange) Inside(rowIndex int, colIndex int) bool {
+	return rowIndex >= r.StartRow && rowIndex <= r.EndRow && colIndex >= r.StartCol && colIndex <= r.EndCol
+}
+
+func (r MatrixRange) InsideRow(rowIndex int) bool {
+	return rowIndex >= r.StartRow && rowIndex <= r.EndRow
+}
+
+func (r MatrixRange) InsideStartRow(rowIndex int) bool {
+	return rowIndex >= r.StartRow
+}
+
+func (r MatrixRange) InsideEndRow(rowIndex int) bool {
+	return rowIndex <= r.EndRow
+}
+
+func (r MatrixRange) InsideCol(colIndex int) bool {
+	return colIndex >= r.StartCol && colIndex <= r.EndCol
+}
+
+func (r MatrixRange) InsideStartCol(colIndex int) bool {
+	return colIndex >= r.StartCol
+}
+
+func (r MatrixRange) InsideEndCol(colIndex int) bool {
+	return colIndex <= r.EndCol
+}
+
 // methods for Matrix type
 
 func (m Matrix[T]) Rows() int {
@@ -311,6 +341,17 @@ func (m Matrix[T]) Transpose() Matrix[T] {
 		}
 	}
 	return t
+}
+
+func (m Matrix[T]) GetRange() MatrixRange {
+	return MatrixRange{
+		StartRow: 0,
+		EndRow:   m.Rows() - 1,
+		StartCol: 0,
+		EndCol:   m.Cols() - 1,
+		Rows:     m.Rows(),
+		Cols:     m.Cols(),
+	}
 }
 
 // other functions
