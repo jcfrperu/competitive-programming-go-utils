@@ -80,15 +80,20 @@ func (m Matrix[T]) IsValidAt(rowIndex int, colIndex int) bool {
 	return m.HasRowAt(rowIndex) && m.HasColAt(colIndex)
 }
 
-func (m Matrix[T]) SetValueAt(rowIndex int, colIndex int, newValue T) bool {
-	if m.IsValidAt(rowIndex, colIndex) {
-		m[rowIndex][colIndex].Value = newValue
-	}
-	return false
+func (m Matrix[T]) SetAt(rowIndex int, colIndex int, newValue T) {
+	m[rowIndex][colIndex].Value = newValue
 }
 
-func (m Matrix[T]) GetValueAt(rowIndex int, colIndex int) Node[T] {
-	return m[rowIndex][colIndex]
+func (m Matrix[T]) GetAt(rowIndex int, colIndex int) T {
+	return m[rowIndex][colIndex].Value
+}
+
+func (m Matrix[T]) SetNodeAt(node Node[T]) {
+	m[node.Row][node.Col] = node
+}
+
+func (m Matrix[T]) GetNodeAt(node Node[T]) Node[T] {
+	return m[node.Row][node.Col]
 }
 
 func (m Matrix[T]) GetRowAt(rowIndex int) []Node[T] {
