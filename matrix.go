@@ -15,6 +15,21 @@ func (n Node[T]) Update(value T) Node[T] {
 
 // methods for Matrix range
 
+func (r MatrixRange) NewMatrixRangeFromSizes(rows int, cols int) MatrixRange {
+	return r.NewMatrixRange(0, rows-1, 0, cols-1)
+}
+
+func (r MatrixRange) NewMatrixRange(startRow int, endRow int, startCol int, endCol int) MatrixRange {
+	return MatrixRange{
+		StartRow: startRow,
+		EndRow:   endRow,
+		StartCol: startCol,
+		EndCol:   endCol,
+		Rows:     endRow - startRow + 1,
+		Cols:     endCol - startCol + 1,
+	}
+}
+
 func (r MatrixRange) Inside(rowIndex int, colIndex int) bool {
 	return rowIndex >= r.StartRow && rowIndex <= r.EndRow && colIndex >= r.StartCol && colIndex <= r.EndCol
 }
@@ -65,12 +80,15 @@ func (m Matrix[T]) IsValidAt(rowIndex int, colIndex int) bool {
 	return m.HasRowAt(rowIndex) && m.HasColAt(colIndex)
 }
 
-func (m Matrix[T]) HasRowRangeAt(startRowIndex int, endRowIndex int) bool {
-	return m.HasRowAt(startRowIndex) && m.HasRowAt(endRowIndex) && endRowIndex >= startRowIndex
+func (m Matrix[T]) SetValueAt(rowIndex int, colIndex int, newValue T) bool {
+	if m.IsValidAt(rowIndex, colIndex) {
+		m[rowIndex][colIndex].Value = newValue
+	}
+	return false
 }
 
-func (m Matrix[T]) HasColRangeAt(startColIndex int, endColIndex int) bool {
-	return m.HasColAt(startColIndex) && m.HasColAt(endColIndex) && endColIndex >= startColIndex
+func (m Matrix[T]) GetValueAt(rowIndex int, colIndex int) Node[T] {
+	return m[rowIndex][colIndex]
 }
 
 func (m Matrix[T]) GetRowAt(rowIndex int) []Node[T] {
@@ -382,6 +400,7 @@ func PrintMatrix[T any](m Matrix[T]) {
 		}
 		fmt.Printf("\n")
 	}
+	fmt.Printf("\n")
 }
 
 func BuildStrMatrix(lines []string) Matrix[string] {
@@ -411,4 +430,5 @@ func PrintStrMatrix(m Matrix[string]) {
 		}
 		fmt.Printf("\n")
 	}
+	fmt.Printf("\n")
 }
