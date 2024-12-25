@@ -32,11 +32,10 @@ func Freq[T int | int64 | float64 | string](list []T, sortByFreq bool) (map[T]in
 			return items[i] < items[j]
 		})
 	}
-
 	return frequencies, items, minIndex, maxIndex
 }
 
-func PermuteIn[T any](items []T, k int, createCopy bool) [][]T {
+func Permute[T any](items []T, k int, createCopy bool) [][]T {
 	initCapacity := Pow(len(items), k) // be careful with big values of 'k' and len(items)
 	permutations := make([][]T, 0, initCapacity)
 
@@ -66,6 +65,5 @@ func PermuteIn[T any](items []T, k int, createCopy bool) [][]T {
 		// all permutations of k 'k'
 		helper([]T{}, k)
 	}
-
 	return permutations
 }
