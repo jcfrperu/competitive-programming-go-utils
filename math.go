@@ -1,5 +1,7 @@
 package cp
 
+import "math"
+
 func GCD[T int | int64](a, b T) T {
 	for b != 0 {
 		a, b = b, a%b
@@ -73,4 +75,8 @@ func Abs[T int | int64](a, b T) T {
 		return a - b
 	}
 	return b - a
+}
+
+func Pow[T int | int64 | float64](x, y T) T {
+	return T(math.Pow(float64(x), float64(y)))
 }
