@@ -1,12 +1,12 @@
 package cp
 
-type Node[T any] struct {
+type Cell[T any] struct {
 	Value T
 	Row   int
 	Col   int
 }
 
-type Matrix[T any] [][]Node[T]
+type Matrix[T any] [][]Cell[T]
 
 type MatrixRange struct {
 	StartRow, EndRow int
