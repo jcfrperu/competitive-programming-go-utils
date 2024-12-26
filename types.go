@@ -14,3 +14,9 @@ type MatrixRange struct {
 	Rows             int
 	Cols             int
 }
+
+type ListRange struct {
+	Start int
+	End   int
+	Size  int
+}
